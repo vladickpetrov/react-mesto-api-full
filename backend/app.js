@@ -1,9 +1,9 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const { celebrate, Joi } = require('celebrate');
+const { celebrate, Joi, errors } = require('celebrate');
 const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
-const cors = require('cors');
+// const cors = require('cors');
 
 const NotFoundError = require('./errors/not_found_error');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
@@ -12,7 +12,7 @@ const {
   login,
   createUser,
 } = require('./controllers/users');
-// const { centralErrorHandling } = require('./central_error_handling');
+const { centralErrorHandling } = require('./central_error_handling');
 
 const { PORT = 3000 } = process.env;
 const app = express();
@@ -41,7 +41,7 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
   useNewUrlParser: true,
 });
 
-app.use(cors());
+// app.use(cors());
 
 app.use(helmet());
 app.use(limiter);
@@ -75,8 +75,8 @@ app.use('/*', (req, res, next) => {
 
 app.use(errorLogger);
 
-// app.use(errors());
+app.use(errors());
 
-// app.use(centralErrorHandling);
+app.use(centralErrorHandling);
 
 app.listen(PORT);
