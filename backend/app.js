@@ -12,7 +12,7 @@ const {
   login,
   createUser,
 } = require('./controllers/users');
-const { centralErrorHandling } = require('./central_error_handling');
+// const { centralErrorHandling } = require('./central_error_handling');
 
 const { PORT = 3000 } = process.env;
 const app = express();
@@ -35,13 +35,13 @@ const limiter = rateLimit({
   legacyHeaders: false,
 });
 
-app.use(cors());
-
 app.use(express.json());
 
 mongoose.connect('mongodb://localhost:27017/mestodb', {
   useNewUrlParser: true,
 });
+
+app.use(cors());
 
 app.use(helmet());
 app.use(limiter);
@@ -77,6 +77,6 @@ app.use(errorLogger);
 
 app.use(errors());
 
-app.use(centralErrorHandling);
+// app.use(centralErrorHandling);
 
 app.listen(PORT);
