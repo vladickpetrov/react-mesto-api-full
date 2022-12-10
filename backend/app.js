@@ -35,6 +35,8 @@ const limiter = rateLimit({
   legacyHeaders: false,
 });
 
+app.use(cors());
+
 app.use(express.json());
 
 mongoose.connect('mongodb://localhost:27017/mestodb', {
@@ -44,8 +46,6 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
 app.use(helmet());
 app.use(limiter);
 app.use(requestLogger);
-
-app.use(cors());
 
 app.post('/signin', celebrate({
   body: Joi.object().keys({
