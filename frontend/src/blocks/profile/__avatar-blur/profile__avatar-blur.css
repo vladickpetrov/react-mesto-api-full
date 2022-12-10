@@ -1,0 +1,18 @@
+.profile__avatar-blur {
+    position: absolute;
+    opacity: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    background-image: url(../../../images/vectors/pencil.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: 0;
+    bottom: 0;
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    transition: opacity 0.2s linear;
+    cursor: pointer;
+}
+.profile__avatar-blur:hover {
+    opacity: 1;
+}

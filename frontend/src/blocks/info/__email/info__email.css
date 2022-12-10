@@ -1,0 +1,9 @@
+.info__email {
+    margin: 0;
+}
+
+@media screen and (max-width: 400px) {
+    .info__email {
+        padding-bottom: 18px;
+    }
+}

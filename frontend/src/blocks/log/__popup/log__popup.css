@@ -1,0 +1,7 @@
+.log__popup {
+    background-image: url(../../../images/vectors/Union.svg);
+    width: 120px;
+    height: 120px;
+    background-size: contain;
+    background-repeat: no-repeat;
+}

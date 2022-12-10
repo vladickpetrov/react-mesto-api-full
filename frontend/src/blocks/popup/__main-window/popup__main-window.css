@@ -1,0 +1,27 @@
+.popup__main-window {
+    position: fixed;
+    z-index: 1;
+    top: calc((100% - 330px) / 2);
+    right: calc((100% - 430px) / 2);
+    width: 430px;
+    height: 330px;
+    background-color: #FFFFFF;
+    border-radius: 10px;
+}
+
+.popup_sure .popup__main-window {
+    max-height: 181px;
+}
+
+.popup_avatar .popup__main-window {
+    max-height: 272px;
+}
+
+@media screen and (max-width: 530px) {
+    .popup__main-window {
+        top: calc((100% - 322px) / 2);
+        right: calc((100% - 282px) / 2);
+        width: 282px;
+        height: 322px;
+    }
+}

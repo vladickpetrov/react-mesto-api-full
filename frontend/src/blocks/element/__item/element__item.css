@@ -1,0 +1,11 @@
+.element__item {
+    position: relative;
+    background: #FFFFFF;
+    width: 282px;
+    height: 361px;
+    border-radius: 10px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    display: flex;
+    flex-direction: column;
+}

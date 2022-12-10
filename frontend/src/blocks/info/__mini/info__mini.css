@@ -1,0 +1,15 @@
+.info__mini {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    visibility: hidden;
+    opacity: 0;
+    height: 0;
+    transition: opacity 0.5s, height 0.5s ease-in-out;
+}
+
+@media screen and (min-width: 401px) {
+    .info__mini {
+        display: none;
+    }
+}
