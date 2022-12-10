@@ -17,16 +17,16 @@ const { centralErrorHandling } = require('./central_error_handling');
 const { PORT = 3000 } = process.env;
 const app = express();
 
-const options = {
-  origin: [
-    'https://vladickpetrov.nomoredomains.club',
-    'http://vladickpetrov.nomoredomains.club',
-  ],
-  methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
-  preflightContinue: false,
-  optionsSuccessStatus: 204,
-  allowedHeaders: ['Content-Type', 'origin', 'Authorization'],
-};
+// const options = {
+//   origin: [
+//     'https://vladickpetrov.nomoredomains.club',
+//     'http://vladickpetrov.nomoredomains.club',
+//   ],
+//   methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
+//   preflightContinue: false,
+//   optionsSuccessStatus: 204,
+//   allowedHeaders: ['Content-Type', 'origin', 'Authorization'],
+// };
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
@@ -45,7 +45,7 @@ app.use(helmet());
 app.use(limiter);
 app.use(requestLogger);
 
-app.use('*', cors(options));
+app.use(cors());
 
 app.post('/signin', celebrate({
   body: Joi.object().keys({
