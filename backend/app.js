@@ -14,7 +14,7 @@ const {
 } = require('./controllers/users');
 const { centralErrorHandling } = require('./central_error_handling');
 
-const { PORT = 3000 } = process.env;
+const { PORT = 3001 } = process.env;
 const app = express();
 
 const options = {

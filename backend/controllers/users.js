@@ -16,7 +16,7 @@ module.exports.getUser = (req, res, next) => {
   User.findById(req.user._id)
     .then((user) => {
       if (user == null) throw new NotFoundError('Пользователь не найден');
-      return res.send({ data: user });
+      return res.send(user);
     })
     .catch((err) => {
       if (err.name === 'CastError') throw new IncorrectError('Введен некорректные Id');
@@ -28,7 +28,7 @@ module.exports.getUserbyId = (req, res, next) => {
   User.findById(req.params.userId)
     .then((user) => {
       if (user == null) throw new NotFoundError('Пользователь не найден');
-      return res.send({ data: user });
+      return res.send(user);
     })
     .catch((err) => {
       if (err.name === 'CastError') throw new IncorrectError('Введен некорректные Id');
@@ -101,7 +101,7 @@ module.exports.updateUser = (req, res, next) => {
     new: true,
     runValidators: true,
   })
-    .then((user) => res.send({ data: user }))
+    .then((user) => res.send(user))
     .catch((err) => {
       if (err.name === 'CastError') throw new IncorrectError('Введен некорректные Id');
       if (err.name === 'ValidationError') throw new IncorrectError('Введены некорректные данные');
@@ -116,7 +116,7 @@ module.exports.updateUserAvatar = (req, res, next) => {
     new: true,
     runValidators: true,
   })
-    .then((user) => res.send({ data: user }))
+    .then((user) => res.send(user))
     .catch((err) => {
       if (err.name === 'CastError') throw new IncorrectError('Введен некорректные Id');
       if (err.name === 'ValidationError') throw new IncorrectError('Введены некорректные данные');

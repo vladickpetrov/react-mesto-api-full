@@ -6,7 +6,7 @@ const PermissionError = require('../errors/permission_error');
 module.exports.getCards = (req, res, next) => {
   Card.find({})
     .populate(['owner', 'likes'])
-    .then((cards) => res.send({ data: cards }))
+    .then((cards) => res.send([...cards]))
     .catch(next);
 };
 
@@ -19,7 +19,7 @@ module.exports.deleteCard = (req, res, next) => {
     .then(() => {
       Card.findByIdAndDelete(req.params.cardId)
         .then((card) => {
-          res.send({ data: card });
+          res.send(card);
         })
         .catch((err) => {
           if (err.name === 'CastError') throw new IncorrectError('Введен некорректные CardId');
@@ -35,7 +35,7 @@ module.exports.createCard = (req, res, next) => {
   const { name, link } = req.body;
 
   Card.create({ name, link, owner: req.user._id })
-    .then((card) => res.send({ data: card }))
+    .then((card) => res.send(card))
     .catch((err) => {
       if (err.name === 'ValidationError') throw new IncorrectError('Введены некорректные данные');
       next(err);
@@ -53,7 +53,7 @@ module.exports.likeCard = (req, res, next) => {
     .populate(['owner', 'likes'])
     .then((card) => {
       if (card == null) throw new NotFoundError('Карточка не найдена');
-      return res.send({ data: card });
+      return res.send(card);
     })
     .catch((err) => {
       if (err.name === 'CastError') throw new IncorrectError('Введен некорректные CardId');
@@ -72,7 +72,7 @@ module.exports.dislikeCard = (req, res, next) => {
     .populate(['owner', 'likes'])
     .then((card) => {
       if (card == null) throw new NotFoundError('Карточка не найдена');
-      return res.send({ data: card });
+      return res.send(card);
     })
     .catch((err) => {
       if (err.name === 'CastError') throw new IncorrectError('Введен некорректные CardId');
