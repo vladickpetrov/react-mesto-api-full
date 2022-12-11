@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-require('dotenv').config();
+const { NODE_ENV, JWT_SECRET } = require('dotenv').config();
 const User = require('../models/user');
 const IncorrectError = require('../errors/incorrect_error');
 const NotFoundError = require('../errors/not_found_error');
@@ -82,14 +82,10 @@ module.exports.login = (req, res, next) => {
     .then((user) => {
       const token = jwt.sign(
         { _id: user._id },
-        'e5fbda01a7238de9952c8df1afe7153f89d10ae6f0cd4f5202819b2b0b185575',
+        NODE_ENV === 'production' ? JWT_SECRET : 'e5fbda01a7238de9952c8df1afe7153f89d10ae6f0cd4f5202819b2b0b185575',
         { expiresIn: '7d' },
       );
       res.send({ token });
-      // res.cookie('jwt', token, {
-      //   maxAge: 3600000 * 24 * 7,
-      //   httpOnly: true,
-      // });
     })
     .catch((err) => next(err));
 };

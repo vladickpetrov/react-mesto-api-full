@@ -22,7 +22,6 @@ const options = {
     'http://localhost:3000',
     'https://vladickpetrov.nomoredomains.club',
     'http://vladickpetrov.nomoredomains.club',
-    'https://YOUR.github.io',
   ],
   methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
   preflightContinue: false,
