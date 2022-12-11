@@ -44,6 +44,7 @@ app.use(express.json());
 mongoose.connect('mongodb://localhost:27017/mestodb', {
   useNewUrlParser: true,
 });
+mongoose.set('strictQuery', false);
 
 app.use(helmet());
 app.use(limiter);
