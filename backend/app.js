@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const { celebrate, Joi, errors } = require('celebrate');
 const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
-const cors = require('cors');
+// const cors = require('cors');
 
 const NotFoundError = require('./errors/not_found_error');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
@@ -36,7 +36,7 @@ const limiter = rateLimit({
   legacyHeaders: false,
 });
 
-app.use('*', cors());
+// app.use('*', cors());
 
 app.use(express.json());
 
