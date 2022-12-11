@@ -17,17 +17,17 @@ const { centralErrorHandling } = require('./central_error_handling');
 const { PORT = 3001 } = process.env;
 const app = express();
 
-const options = {
-  origin: [
-    'http://localhost:3000',
-    'https://ВАШ ДОМЕЙН С ДОКУМЕНТА',
-    'https://YOUR.github.io',
-  ],
-  methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
-  preflightContinue: false,
-  optionsSuccessStatus: 204,
-  allowedHeaders: ['Content-Type', 'origin', 'Authorization'],
-};
+// const options = {
+//   origin: [
+//     'http://localhost:3000',
+//     'https://ВАШ ДОМЕЙН С ДОКУМЕНТА',
+//     'https://YOUR.github.io',
+//   ],
+//   methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
+//   preflightContinue: false,
+//   optionsSuccessStatus: 204,
+//   allowedHeaders: ['Content-Type', 'origin', 'Authorization'],
+// };
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
@@ -36,7 +36,7 @@ const limiter = rateLimit({
   legacyHeaders: false,
 });
 
-app.use('*', cors(options));
+app.use('*', cors());
 
 app.use(express.json());
 
