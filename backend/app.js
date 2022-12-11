@@ -12,7 +12,7 @@ const {
   login,
   createUser,
 } = require('./controllers/users');
-// const { centralErrorHandling } = require('./central_error_handling');
+const { centralErrorHandling } = require('./central_error_handling');
 
 const { PORT = 3001 } = process.env;
 const app = express();
@@ -20,7 +20,8 @@ const app = express();
 const options = {
   origin: [
     'http://localhost:3000',
-    'https://ВАШ ДОМЕЙН С ДОКУМЕНТА',
+    'https://vladickpetrov.nomoredomains.club',
+    'http://vladickpetrov.nomoredomains.club',
     'https://YOUR.github.io',
   ],
   methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
@@ -78,6 +79,6 @@ app.use(errorLogger);
 
 app.use(errors());
 
-// app.use(centralErrorHandling);
+app.use(centralErrorHandling);
 
 app.listen(PORT);
