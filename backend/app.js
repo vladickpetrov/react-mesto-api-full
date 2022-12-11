@@ -78,6 +78,6 @@ app.use(errorLogger);
 
 app.use(errors());
 
-app.use(centralErrorHandling);
+// app.use(centralErrorHandling);
 
 app.listen(PORT);
