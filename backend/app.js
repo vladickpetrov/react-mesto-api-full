@@ -16,6 +16,8 @@ const {
 const { centralErrorHandling } = require('./central_error_handling');
 const { signIn, signUp } = require('./validation-Joi');
 
+const { NODE_ENV, DB_LINK } = process.env;
+
 const { PORT = 3001 } = process.env;
 const app = express();
 
@@ -37,7 +39,7 @@ app.use('*', cors(options));
 
 app.use(express.json());
 
-mongoose.connect(process.env.DB_LINK, {
+mongoose.connect(NODE_ENV === 'production' ? DB_LINK : 'mongodb://localhost:27017/mestodb', {
   useNewUrlParser: true,
 });
 mongoose.set('strictQuery', false);
