@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const { celebrate, errors } = require('celebrate');
 const helmet = require('helmet');
 const cors = require('cors');
-const { DB_LINK } = require('dotenv').config();
+// const { DB_LINK } = require('dotenv').config();
 
 const NotFoundError = require('./errors/not_found_error');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
@@ -35,7 +35,7 @@ app.use('*', cors(options));
 
 app.use(express.json());
 
-mongoose.connect(DB_LINK, {
+mongoose.connect('mongodb://localhost:27017/mestodb', {
   useNewUrlParser: true,
 });
 mongoose.set('strictQuery', false);
