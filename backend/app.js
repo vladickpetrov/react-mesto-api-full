@@ -2,12 +2,12 @@ const express = require('express');
 const mongoose = require('mongoose');
 const { celebrate, errors } = require('celebrate');
 const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
 const cors = require('cors');
-// const { DB_LINK } = require('dotenv').config();
 
 const NotFoundError = require('./errors/not_found_error');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
-const { limiter } = require('./limiter');
+const { limitSettings } = require('./limiter');
 const auth = require('./middlewares/auth');
 const {
   login,
@@ -31,11 +31,13 @@ const options = {
   allowedHeaders: ['Content-Type', 'origin', 'Authorization'],
 };
 
+const limiter = rateLimit(limitSettings);
+
 app.use('*', cors(options));
 
 app.use(express.json());
 
-mongoose.connect('mongodb://localhost:27017/mestodb', {
+mongoose.connect(process.env.DB_LINK, {
   useNewUrlParser: true,
 });
 mongoose.set('strictQuery', false);
