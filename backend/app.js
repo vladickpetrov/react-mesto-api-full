@@ -1,18 +1,20 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const { celebrate, Joi, errors } = require('celebrate');
-const rateLimit = require('express-rate-limit');
+const { celebrate, errors } = require('celebrate');
 const helmet = require('helmet');
 const cors = require('cors');
+const { DB_LINK } = require('dotenv').config();
 
 const NotFoundError = require('./errors/not_found_error');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
+const { limiter } = require('./limiter');
 const auth = require('./middlewares/auth');
 const {
   login,
   createUser,
 } = require('./controllers/users');
 const { centralErrorHandling } = require('./central_error_handling');
+const { signIn, signUp } = require('./validation-Joi');
 
 const { PORT = 3001 } = process.env;
 const app = express();
@@ -29,25 +31,18 @@ const options = {
   allowedHeaders: ['Content-Type', 'origin', 'Authorization'],
 };
 
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 100,
-  standardHeaders: true,
-  legacyHeaders: false,
-});
-
 app.use('*', cors(options));
 
 app.use(express.json());
 
-mongoose.connect('mongodb://localhost:27017/mestodb', {
+mongoose.connect(DB_LINK, {
   useNewUrlParser: true,
 });
 mongoose.set('strictQuery', false);
 
 app.use(helmet());
-app.use(limiter);
 app.use(requestLogger);
+app.use(limiter);
 
 app.get('/crash-test', () => {
   setTimeout(() => {
@@ -55,21 +50,8 @@ app.get('/crash-test', () => {
   }, 0);
 });
 
-app.post('/signin', celebrate({
-  body: Joi.object().keys({
-    email: Joi.string().required().email(),
-    password: Joi.string().required(),
-  }),
-}), login);
-app.post('/signup', celebrate({
-  body: Joi.object().keys({
-    name: Joi.string().min(2).max(30),
-    about: Joi.string().min(2).max(30),
-    avatar: Joi.string().pattern(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,}\.[a-zA-Z0-9()]{1,}\b([-a-zA-Z0-9()@:%_\\+.~#?&//=]*)/),
-    email: Joi.string().required().email(),
-    password: Joi.string().required(),
-  }),
-}), createUser);
+app.post('/signin', celebrate(signIn), login);
+app.post('/signup', celebrate(signUp), createUser);
 
 app.use(auth);
 
